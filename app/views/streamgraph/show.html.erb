@@ -1,16 +1,42 @@
 <% content_for :head do %>
-<script type="text/javascript" src="/javascripts/stream_layers.js">  
-</script>
-
+<script type="text/javascript" src="/javascripts/stream_layers.js"></script>
 <% end %>
-<h1>Streamgraph</h1>
-<div id="chart" >
-      <button class="first last" onclick="transition()">
+
+<div class="page-header">
+<h1 class="subhead"> GHDx Streamgraph</h1>
+</div>
+
+
+<div class="row show-grid">
+
+
+  <div class="span2">
+    <div class="row show-grid">
+
+    <div class="span2 side-things">
+      <button class="btn" onclick="transition()">
         Update
       </button>
-      <%= javascript_include_tag params[:controller] %>
+    </div>
+
+    <div class="span2 side-things">
+      <button class="btn" onclick="transition()">
+        Update
+      </button>
+    </div>
+  </div>
+
+  </div>
+
+
+<div class="span10">
+  <div id="chart" >
+    <%= javascript_include_tag params[:controller] %>
+  </div>
 </div>
-<% end %>
+
+
+</div>
 
 
 
