@@ -1,0 +1,17 @@
+<% content_for :head do %>
+<script type="text/javascript" src="/javascripts/stream_layers.js">  
+</script>
+
+<% end %>
+<h1>Streamgraph</h1>
+<div id="chart" >
+      <button class="first last" onclick="transition()">
+        Update
+      </button>
+      <%= javascript_include_tag params[:controller] %>
+</div>
+<% end %>
+
+
+
+
