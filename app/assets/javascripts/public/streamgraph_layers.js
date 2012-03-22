@@ -1,3 +1,27 @@
+function getCountries() {
+    url = '/terms_by_parent/';
+    result = {};
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: url,
+        dataType: 'json',
+        success: function(o){
+            result = o;
+         },
+         error: function (xhr, ajaxOptions, thrownError){
+             console.log(thrownError);
+         }
+    });
+    return result;
+}
+jQuery(document).ready(function($) {
+countries = getCountries()
+$('#countrybox').typeahead({
+    source: countries,
+    items: 10,
+});
+});
 /* Inspired by Lee Byron's test data generator. */
 function stream_layers(n, m, o) {
   if (arguments.length < 3) o = 0;

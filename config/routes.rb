@@ -6,6 +6,7 @@ Navigator::Application.routes.draw do
 
   get "/streamgraph/" => "streamgraph#show"
 
+  get "/terms_by_parent/" => "streamgraph#countries"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
