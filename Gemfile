@@ -39,8 +39,6 @@ gem 'sort_alphabetical'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.5'
-  gem 'cucumber-rails'
-  gem 'cucumber-websteps'
   gem 'capybara'
 end
 
@@ -49,6 +47,9 @@ end
 group :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
+  gem 'cucumber-rails'
+  gem 'cucumber-websteps'
+
 end
 
 gem 'pry-rails', :group => :development
