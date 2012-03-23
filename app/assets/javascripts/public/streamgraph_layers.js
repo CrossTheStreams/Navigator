@@ -15,13 +15,63 @@ function getCountries() {
     });
     return result;
 }
+
 jQuery(document).ready(function($) {
+
 countries = getCountries()
 $('#countrybox').typeahead({
     source: countries,
     items: 10,
 });
+
+$("#countryform").submit(function() {
+  getData();
+  return false;
 });
+
+});
+
+function getData() {
+    url = '/streamgraph/1396/';
+    data_array = {};
+    $.ajax({
+        async: true,
+        type: 'GET',
+        url: url,
+        context: 'graphdata',
+        dataType: 'json',
+        success: function(o){
+            data_array = o;
+         },
+         error: function (xhr, ajaxOptions, thrownError){
+             console.log(thrownError);
+         }
+    });
+    return data_array;
+}
+
+function getLabels() {
+    url = '/streamgraph/1396/labels/';
+    labels_array = {};
+    $.ajax({
+        async: true,
+        type: 'GET',
+        url: url,
+        context: 'labels',
+        dataType: 'json',
+        success: function(o){
+            labels_array = o;
+         },
+         error: function (xhr, ajaxOptions, thrownError){
+             console.log(thrownError);
+         }
+    });
+    return labels_array;
+}
+
+
+
+
 /* Inspired by Lee Byron's test data generator. */
 function stream_layers(n, m, o) {
   if (arguments.length < 3) o = 0;
@@ -41,6 +91,7 @@ function stream_layers(n, m, o) {
       return a.map(stream_index);
     });
 }
+
 
 /* Another layer generator using gamma distributions. */
 function stream_waves(n, m) {

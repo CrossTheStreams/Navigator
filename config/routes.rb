@@ -4,6 +4,8 @@ Navigator::Application.routes.draw do
 
   get "/streamgraph/:id" => "streamgraph#data"
 
+  get "/streamgraph/:id/labels/" => "streamgraph#labels"
+
   get "/streamgraph/" => "streamgraph#show"
 
   get "/terms_by_parent/" => "streamgraph#countries"

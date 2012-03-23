@@ -1,5 +1,6 @@
 class StreamgraphController < ApplicationController
 
+  before_filter :get_data_and_labels
 
   def countries
     @countries_and_nids = TermHierarchy.array_by_parent(5)
@@ -12,17 +13,31 @@ class StreamgraphController < ApplicationController
   end
 
   def data
-    data = TermDatum.streamgraph(params[:id])
-    @graphdata = data[0]
-    @labels = data[1]
+    @graphdata
     respond_to do |format|
     format.json{
-      render :json => @graphdata.to_json
-      render :json => @labels.to_json
+      render :json => @graphdata
     }       
     end
   end
 
+  def labels
+    @labels
+    respond_to do |format|
+      format.json{
+        render :json => @labels
+      }
+    end
+  end
+
   def show
+  end
+
+protected
+
+  def get_data_and_labels
+    data = TermDatum.streamgraph(params[:id])
+    @graphdata = data[0]
+    @labels = data[1]
   end
 end
