@@ -4,7 +4,7 @@ class StreamgraphController < ApplicationController
 
   def countries
     @countries_and_nids = TermHierarchy.array_by_parent(5)
-    @countries = @countries_and_nids.map {|a| a[0]}
+    @countries = @countries_and_nids #.map {|a| a[0]}
     respond_to do |format|
     format.json{
       render :json => @countries.to_json

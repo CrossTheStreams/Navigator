@@ -1,4 +1,4 @@
-function getCountries() {
+function getCountriesAndNids() {
     url = '/terms_by_parent/';
     result = {};
     $.ajax({
@@ -16,23 +16,24 @@ function getCountries() {
     return result;
 }
 
+
 jQuery(document).ready(function($) {
 
-countries = getCountries()
+countries = $.map(getCountriesAndNids(), function(val, index) {
+     return val[0];
+})
+
 $('#countrybox').typeahead({
     source: countries,
-    items: 10,
+    items: 5,
 });
 
 $("#countryform").submit(function() {
-  getData();
-  return false;
-});
+  $.map(getCountriesAndNids(), function(val, index) {
+     if (val[0] == $("input:first").val()) {
+     countrynid = val[1];
 
-});
-
-function getData() {
-    url = '/streamgraph/1396/';
+    url = '/streamgraph/' + countrynid + '/';
     data_array = {};
     $.ajax({
         async: true,
@@ -47,16 +48,13 @@ function getData() {
              console.log(thrownError);
          }
     });
-    return data_array;
-}
 
-function getLabels() {
-    url = '/streamgraph/1396/labels/';
+		labelsurl = '/streamgraph/' + countrynid + '/labels/';
     labels_array = {};
     $.ajax({
         async: true,
         type: 'GET',
-        url: url,
+        url: labelsurl,
         context: 'labels',
         dataType: 'json',
         success: function(o){
@@ -66,8 +64,32 @@ function getLabels() {
              console.log(thrownError);
          }
     });
-    return labels_array;
-}
+	  }
+});
+  return false;
+});
+
+});
+
+
+
+//function getLabels() {
+    //labelsurl = '/streamgraph/' + countrynid + '/labels/';
+    //labels_array = {};
+    //$.ajax({
+        //async: true,
+        //type: 'GET',
+        //url: labelsurl,
+        //context: 'labels',
+        //dataType: 'json',
+        //success: function(o){
+            //labels_array = o;
+         //},
+         //error: function (xhr, ajaxOptions, thrownError){
+             //console.log(thrownError);
+         //}
+    //});
+//}
 
 
 
@@ -75,15 +97,16 @@ function getLabels() {
 /* Inspired by Lee Byron's test data generator. */
 function stream_layers(n, m, o) {
   if (arguments.length < 3) o = 0;
-  function bump(a) {
-    var x = 1 / (.1 + Math.random()),
-        y = 2 * Math.random() - .5,
-        z = 10 / (.1 + Math.random());
-    for (var i = 0; i < m; i++) {
-      var w = (i / m - y) * z;
-      a[i] += x * Math.exp(-w * w);
-    }
-  }
+/*  function bump(a) {*/
+    //var x = 1 / (.1 + Math.random()),
+        //y = 2 * Math.random() - .5,
+        //z = 10 / (.1 + Math.random());
+    //for (var i = 0; i < m; i++) {
+      //var w = (i / m - y) * z;
+      //a[i] += x * Math.exp(-w * w);
+    //}
+  /*}*/
+
   return d3.range(n).map(function() {
       var a = [], i;
       for (i = 0; i < m; i++) a[i] = o + o * Math.random();
@@ -104,8 +127,17 @@ function stream_waves(n, m) {
 }
 
 function stream_index(d, i) {
+	
   return {x: i, y: Math.max(0, d)};
 }
 
 
+/* Close, but no cigar. Yet. */
 
+/*$.map(data_array, function(arr, index) {*/
+   //$.map(arr, function(stuff, year){
+    //a = []; 
+    //a[year] = {x : year, y : stuff};
+  //});
+  //return a;
+/*});*/

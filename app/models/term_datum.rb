@@ -43,7 +43,7 @@ class TermDatum < ActiveRecord::Base
 
     year_rows = (t.year + 1 - graph_start_year)
 
-    #Array for Streamgraph.js
+    #Array for Streamgraph.js...
 
     array_for_json = Array.new(year_rows) {Array.new(column_labels.count, 0)}
 
@@ -65,6 +65,9 @@ class TermDatum < ActiveRecord::Base
         row_iteration.call(start_year, end_year, col_id)
     
     end
+
+    #Did I say Streamgraph.js? I meant d3.js.
+
     [array_for_json.transpose, column_labels]
   end
 end
