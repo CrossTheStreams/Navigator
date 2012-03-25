@@ -6,12 +6,6 @@ class TermDatum < ActiveRecord::Base
   has_many :content_type_records, :through => :term_nodes
   has_many :term_hierarchies, :foreign_key => :tid, :primary_key => :tid
   
-  
-  def self.all_with_vid(vid)
-    
-    
-
-  end
 
   def self.streamgraph(tid)
 
@@ -50,7 +44,7 @@ class TermDatum < ActiveRecord::Base
     #Iteration for array_for_json
 
     row_iteration = lambda do |start_index, end_index, col_id| 
-      ([0, start_index].max..[year_rows, end_index].min).each do |row_id| 
+      ([0, start_index].max..[(year_rows - 1), end_index].min).each do |row_id| 
         array_for_json[row_id][col_id] += 1
       end
     end

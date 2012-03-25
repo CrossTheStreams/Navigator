@@ -23,6 +23,7 @@ gem 'gon'
 gem 'json'
 gem 'rabl'
 
+
 gem 'sort_alphabetical'
 
 # To use ActiveModel has_secure_password
@@ -53,5 +54,6 @@ group :test do
 end
 
 gem 'pry-rails', :group => :development
+gem 'pry-exception_explorer'
 
 

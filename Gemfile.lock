@@ -32,6 +32,7 @@ GEM
     addressable (2.2.7)
     ansi (1.4.2)
     arel (2.2.3)
+    binding_of_caller (0.6.7)
     builder (3.0.0)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -98,8 +99,13 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.7.1)
       slop (>= 2.4.4, < 3)
+    pry-exception_explorer (0.1.9)
+      pry-stack_explorer (>= 0.3.9)
     pry-rails (0.1.6)
       pry
+    pry-stack_explorer (0.4.1)
+      binding_of_caller (~> 0.6.2)
+      pry (~> 0.9.8.2)
     rabl (0.6.1)
       activesupport (>= 2.3.14)
       multi_json (~> 1.1.0)
@@ -193,6 +199,7 @@ DEPENDENCIES
   jquery-rails
   json
   mysql2
+  pry-exception_explorer
   pry-rails
   rabl
   rails (= 3.1.3)

@@ -9,6 +9,10 @@ Navigator::Application.routes.draw do
   get "/streamgraph/" => "streamgraph#show"
 
   get "/terms_by_parent/" => "streamgraph#countries"
+
+  get "/all_datasets_by_year/" => "streamgraph#all_datasets"
+
+  get "/all_dataset_types/" => "streamgraph#all_labels"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

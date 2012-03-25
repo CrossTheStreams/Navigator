@@ -19,6 +19,37 @@ function getCountriesAndNids() {
 
 jQuery(document).ready(function($) {
 
+    alldatasetssurl = '/all_datasets_by_year/';
+    all_datasets_array = {};
+    $.ajax({
+        async: true,
+        type: 'GET',
+        url: alldatasetssurl,
+        dataType: 'json',
+        success: function(o){
+            all_datasets_array = o;
+         },
+         error: function (xhr, ajaxOptions, thrownError){
+             console.log(thrownError);
+         }
+		})
+		
+		alltypesurl = '/all_dataset_types/';
+    all_types_array = {};
+    $.ajax({
+        async: true,
+        type: 'GET',
+        url: alltypesurl,
+        dataType: 'json',
+        success: function(o){
+            all_types_array = o;
+         },
+         error: function (xhr, ajaxOptions, thrownError){
+             console.log(thrownError);
+         }
+    });;
+
+
 countries = $.map(getCountriesAndNids(), function(val, index) {
      return val[0];
 })
