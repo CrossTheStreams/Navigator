@@ -16,6 +16,26 @@ function getCountriesAndNids() {
     return result;
 };
 
+
+function streamGraphTheData(data_array) {
+var x = new Array(data_array.length);
+for (var i = 0; i < data_array.length; i++) {
+ x[i] = new Array(data_array[0].length);
+for (var j = 0; j < data_array[0].length; j++) {
+		x[i][j] = '';
+	}
+}
+
+$.map(data_array, function(arr, index) {
+	 $.map(arr, function(stuff, year){
+		x[index][year] = {x : year, y : stuff};
+	});
+	return x;
+});
+}
+
+
+
 function showChart() {
 $('#chart').fadeIn("slow");
 };
@@ -47,8 +67,7 @@ jQuery(document).ready(function($) {
          error: function (xhr, ajaxOptions, thrownError){
              console.log(thrownError);
          }
-    })
-		
+    });
     
     alltypesurl = '/all_dataset_types/';
     all_types_array = {};
@@ -81,8 +100,10 @@ $("#countryform").submit(function() {
   showLoadingGif();
   hideChart();
   $.map(getCountriesAndNids(), function(val, index) {
+
     if (val[0] == $("input:first").val()) {
-    countrynid = val[1];
+   	countrytitle = val[0];
+		countrynid = val[1];	
 
     url = '/streamgraph/' + countrynid + '/';
     data_array = {};
@@ -111,6 +132,7 @@ $("#countryform").submit(function() {
         success: function(o){
             labels_array = o;
             showChart();
+						$("#chart-title").text(countrytitle);
          },
         complete: function(o){
             hideLoadingGif();
@@ -130,15 +152,15 @@ $("#countryform").submit(function() {
 /* Inspired by Lee Byron's test data generator. */
 function stream_layers(n, m, o) {
   if (arguments.length < 3) o = 0;
-/*  function bump(a) {*/
-    //var x = 1 / (.1 + Math.random()),
-        //y = 2 * Math.random() - .5,
-        //z = 10 / (.1 + Math.random());
-    //for (var i = 0; i < m; i++) {
-      //var w = (i / m - y) * z;
-      //a[i] += x * Math.exp(-w * w);
-    //}
-  /*}*/
+	function bump(a) {
+		var x = 1 / (.1 + Math.random()),
+				y = 2 * Math.random() - .5,
+				z = 10 / (.1 + Math.random());
+		for (var i = 0; i < m; i++) {
+			var w = (i / m - y) * z;
+			a[i] += x * Math.exp(-w * w);
+		}
+	}
 
   return d3.range(n).map(function() {
       var a = [], i;
@@ -164,14 +186,6 @@ function stream_index(d, i) {
   return {x: i, y: Math.max(0, d)};
 }
 
+/*data1 = d3.layout.stack().offset("wiggle")(x)*/
 
-/* Close, but no cigar. Yet. */
-
-/*$.map(data_array, function(arr, index) {*/
-   //$.map(arr, function(stuff, year){
-    //a = []; 
-    //a[year] = {x : year, y : stuff};
-  //});
-  //return a;
-/*});*/
-
+/*transition()*/
