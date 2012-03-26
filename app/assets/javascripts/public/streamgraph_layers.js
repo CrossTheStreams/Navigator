@@ -14,8 +14,23 @@ function getCountriesAndNids() {
          }
     });
     return result;
-}
+};
 
+function showChart() {
+$('#chart').fadeIn("slow");
+};
+
+function hideChart() {
+$('#chart').fadeOut("slow");
+};
+
+function showLoadingGif() {
+$('.side-things img').fadeIn("slow");
+};
+
+function hideLoadingGif() {
+$('.side-things img').fadeOut("slow");
+};
 
 jQuery(document).ready(function($) {
 
@@ -32,9 +47,10 @@ jQuery(document).ready(function($) {
          error: function (xhr, ajaxOptions, thrownError){
              console.log(thrownError);
          }
-		})
+    })
 		
-		alltypesurl = '/all_dataset_types/';
+    
+    alltypesurl = '/all_dataset_types/';
     all_types_array = {};
     $.ajax({
         async: true,
@@ -43,26 +59,30 @@ jQuery(document).ready(function($) {
         dataType: 'json',
         success: function(o){
             all_types_array = o;
+            hideLoadingGif();
+            showChart();
          },
          error: function (xhr, ajaxOptions, thrownError){
              console.log(thrownError);
          }
-    });;
+    });
 
 
-countries = $.map(getCountriesAndNids(), function(val, index) {
-     return val[0];
-})
+    countries = $.map(getCountriesAndNids(), function(val, index) {
+        return val[0];
+    })
 
-$('#countrybox').typeahead({
-    source: countries,
-    items: 5,
-});
+    $('#countrybox').typeahead({
+        source: countries,
+        items: 5,
+    });
 
 $("#countryform").submit(function() {
+  showLoadingGif();
+  hideChart();
   $.map(getCountriesAndNids(), function(val, index) {
-     if (val[0] == $("input:first").val()) {
-     countrynid = val[1];
+    if (val[0] == $("input:first").val()) {
+    countrynid = val[1];
 
     url = '/streamgraph/' + countrynid + '/';
     data_array = {};
@@ -80,7 +100,7 @@ $("#countryform").submit(function() {
          }
     });
 
-		labelsurl = '/streamgraph/' + countrynid + '/labels/';
+    labelsurl = '/streamgraph/' + countrynid + '/labels/';
     labels_array = {};
     $.ajax({
         async: true,
@@ -90,6 +110,10 @@ $("#countryform").submit(function() {
         dataType: 'json',
         success: function(o){
             labels_array = o;
+            showChart();
+         },
+        complete: function(o){
+            hideLoadingGif();
          },
          error: function (xhr, ajaxOptions, thrownError){
              console.log(thrownError);
@@ -101,28 +125,6 @@ $("#countryform").submit(function() {
 });
 
 });
-
-
-
-//function getLabels() {
-    //labelsurl = '/streamgraph/' + countrynid + '/labels/';
-    //labels_array = {};
-    //$.ajax({
-        //async: true,
-        //type: 'GET',
-        //url: labelsurl,
-        //context: 'labels',
-        //dataType: 'json',
-        //success: function(o){
-            //labels_array = o;
-         //},
-         //error: function (xhr, ajaxOptions, thrownError){
-             //console.log(thrownError);
-         //}
-    //});
-//}
-
-
 
 
 /* Inspired by Lee Byron's test data generator. */
@@ -172,3 +174,4 @@ function stream_index(d, i) {
   //});
   //return a;
 /*});*/
+

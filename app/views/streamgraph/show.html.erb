@@ -5,7 +5,7 @@
 <div class="page-header">
 
   <h1 class="subhead">GHDx Streamgraph</h1>
-  <h4>Datasets catalogued in the GHDx by country and datatype.</h4>
+  <h4>Datasets catalogued in the Global Health Data Exchange by country and datatype.</h4>
 
 </div>
 
@@ -24,15 +24,16 @@
       <form id="countryform">
       <input name="countrybox" autocomplete="off" id="countrybox" type="text" data-provide="typeahead" class="span2">
       </input>
-      </form>
+      </form>        
+      <%= image_tag "loading.gif" %>
     </div>
   </div>
 
   </div>
 
 
-<div class="span10">
-  <div id="chart" >
+<div id="chart-container" class="span10">
+  <div id="chart" > 
     <%= javascript_include_tag params[:controller] %>
   </div>
 </div>
