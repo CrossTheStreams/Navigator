@@ -1,3 +1,7 @@
+var w = 1000;
+var h = 500;
+
+
 function getCountriesAndNids() {
     url = '/terms_by_parent/';
     result = {};
@@ -23,9 +27,7 @@ var n = x.length, // number of layers
     m = x[0].length, // number of samples per layer
     color = d3.interpolateRgb("#C8F099", "#31A635");
 
-var w = 1000,
-    h = 500,
-    mx = m - 1,
+var mx = m - 1,
     my = d3.max(data0, function(d) {
       return d3.max(d, function(d) {
         return d.y0 + d.y;
@@ -37,7 +39,7 @@ var area = d3.svg.area()
     .y0(function(d) { return h - d.y0 * h / my; })
     .y1(function(d) { return h - (d.y + d.y0) * h / my; });
 
-var vis = d3.select("#chart")
+var vis = d3.select("#chart-goes-here")
   .append("svg")
     .attr("width", w)
     .attr("height", h);
@@ -56,8 +58,6 @@ function transition(x) {
 
 color = d3.interpolateRgb("#C8F099", "#31A635");
 
-var w = 1000,
-    h = 500,
     mx = m - 1,
     my = d3.max(data1, function(d) {
       return d3.max(d, function(d) {
@@ -69,12 +69,6 @@ var area = d3.svg.area()
     .x(function(d) { return d.x * w / mx; })
     .y0(function(d) { return h - d.y0 * h / my; })
     .y1(function(d) { return h - (d.y + d.y0) * h / my; });
-
-var vis = d3.select("#chart")
-  .append("svg")
-    .attr("width", w)
-    .attr("height", h);
-
 
 d3.select("svg").selectAll("path")
     .data(x)
@@ -154,7 +148,7 @@ jQuery(document).ready(function($) {
             all_datasets_array = o;
 
         x = streamGraphTheData(all_datasets_array);
-        data0 = d3.layout.stack().offset("wiggle")(x);        
+        data0 = d3.layout.stack().offset("silhouette")(x);        
         getStreamGraph(x);
 
          },
@@ -217,7 +211,7 @@ $("#countryform").submit(function() {
         x = streamGraphTheData(data_array);
 				n = x.length, // number of layers
         m = x[0].length, // number of samples per layer 
-        data1 = d3.layout.stack().offset("wiggle")(x);
+        data1 = d3.layout.stack().offset("silhouette")(x);
 		    d3.selectAll("path").data(x).exit().remove();
 	      transition(data1);	
     },

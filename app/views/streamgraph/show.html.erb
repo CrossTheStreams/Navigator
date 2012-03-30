@@ -1,5 +1,8 @@
 <% content_for :head do %>
+
   <script type="text/javascript" src="/javascripts/stream_layers.js"></script>
+  <%= stylesheet_link_tag "jquery-ui" %> 
+
 <% end %>
 
 <div class="page-header">
@@ -14,32 +17,58 @@
 
 
   <div class="span2">
+
     <div class="row show-grid">
 
-    <div class="span2 side-things">
-    <h3>Enter a Country Name</h3>
+      <div class="span2 side-things">
+
+        <h3>Enter a Country Name</h3>
+
+      </div>
+
+      <div class="span2 side-things">
+
+        <form id="countryform">
+          <input name="countrybox" autocomplete="off" id="countrybox" type="text" data-provide="typeahead" class="span2">
+          </input>
+        </form>
+
+        <%= image_tag "loading.gif" %>
+
+      </div>
+
     </div>
 
-    <div class="span2 side-things">
-      <form id="countryform">
-      <input name="countrybox" autocomplete="off" id="countrybox" type="text" data-provide="typeahead" class="span2">
-      </input>
-      </form>        
-      <%= image_tag "loading.gif" %>
+  </div>
+
+
+  <div id="chart-container" class="span10">
+
+    <div id="chart">
+
+      <div id="chart-title">
+
+        <h1>All Datasets</h1>
+
+      </div>
+
+      <div id="chart-goes-here">
+      </div>
+
+      <br />
+   
+      <div id="range-slider">
+   
+        <%= javascript_include_tag "range-slider" %>
+        
+      </div>    
+
     </div>
-  </div>
 
-  </div>
+  </div>  
 
 
-<div id="chart-container" class="span10">
-  <div id="chart" >
-  <div id="chart-title">
-    <h1>All Datasets</h1>
-  </div>
-    <%= javascript_include_tag params[:controller] %>
-  </div>
-</div>
+
 
 </div>
 
