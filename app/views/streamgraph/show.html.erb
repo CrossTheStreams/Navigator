@@ -30,6 +30,7 @@
 
         <form id="countryform">
           <input name="countrybox" autocomplete="off" id="countrybox" type="text" data-provide="typeahead" class="span2">
+          <input type="submit" value="Submit" />
           </input>
         </form>
 
@@ -49,6 +50,7 @@
       <div id="chart-title">
 
         <h1>All Datasets</h1>
+        <h2 id="years-selected"></h2>
 
       </div>
 
@@ -58,7 +60,7 @@
       <br />
    
       <div id="range-slider">
-   
+         
         <%= javascript_include_tag "range-slider" %>
         
       </div>    

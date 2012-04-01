@@ -50,6 +50,7 @@ vis.selectAll("path")
     .style("fill", function() { return color(Math.random()); })
     .attr("d", area);
   showChart();
+
 }
 
 
@@ -135,6 +136,7 @@ $('.side-things img').fadeOut("slow");
 
 
 jQuery(document).ready(function($) {
+    
 
 
     alldatasetssurl = '/all_datasets_by_year/';
@@ -145,7 +147,7 @@ jQuery(document).ready(function($) {
         url: alldatasetssurl,
         dataType: 'json',
         success: function(o){
-            all_datasets_array = o;
+        all_datasets_array = o;
 
         x = streamGraphTheData(all_datasets_array);
         data0 = d3.layout.stack().offset("silhouette")(x);        
@@ -184,13 +186,9 @@ jQuery(document).ready(function($) {
         items: 5,
     });
 
-
-
-
-
 $("#countryform").submit(function() {
   showLoadingGif();
-  hideChartTitle();
+  hideChartTitle();	
   $.map(getCountriesAndNids(), function(val, index) {
 
     if (val[0] == $("input:first").val()) {
@@ -205,22 +203,20 @@ $("#countryform").submit(function() {
         url: url,
         context: 'graphdata',
         dataType: 'json',
-        success: function(o){
-
+        success: function(o){	
         data_array = o;
         x = streamGraphTheData(data_array);
 				n = x.length, // number of layers
         m = x[0].length, // number of samples per layer 
         data1 = d3.layout.stack().offset("silhouette")(x);
 		    d3.selectAll("path").data(x).exit().remove();
-	      transition(data1);	
+	      transition(data1);
     },
-         error: function (xhr, ajaxOptions, thrownError){
+         error: function (xhr, timeout, thrownError){
              console.log(thrownError);
+						 hideLoadingGif();
          }
     });
-
-
 
     labelsurl = '/streamgraph/' + countrynid + '/labels/';
     labels_array = {};
@@ -232,11 +228,11 @@ $("#countryform").submit(function() {
         dataType: 'json',
         success: function(o){
             labels_array = o;
-            showChartTitle();
 						$("#chart-title h1").text(countrytitle);
          },
            complete: function(o){
            hideLoadingGif();
+				   showChartTitle();					 
          },
          error: function (xhr, ajaxOptions, thrownError){
            console.log(thrownError);

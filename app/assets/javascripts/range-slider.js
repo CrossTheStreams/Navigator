@@ -8,9 +8,9 @@ $(function() {
 			max: currentyear,
 			values: [ 1950, currentyear ],
 			slide: function( event, ui ) {
-				$( "#year-range-selected" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+				$( "#years-selected" ).text( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 			}
 		});
-		$( "#amount" ).val( "$" + $( "#range-slider" ).slider( "values", 0 ) +
-			" - $" + $( "#range-slider" ).slider( "values", 1 ) );
+		$( "#years-selected" ).text( $( "#range-slider" ).slider( "values", 0 ) +
+			" - " + $( "#range-slider" ).slider( "values", 1 ) );
 	});
