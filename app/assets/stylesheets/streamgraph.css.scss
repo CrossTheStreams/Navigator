@@ -5,7 +5,7 @@
 .subhead {
     margin-bottom: 9px;
     padding-bottom: 0;
-    font-size: 54px;
+    font-size: 33px;
 }
 
 #chart {
@@ -13,13 +13,14 @@ display: none;
 }
 
 #chart-container {
-width:1010px;
-height:510px;
+width:1000px;
+height:500px;
+padding: 15px 15px 40px 15px;
+background-color: #5B5B5B;
 }
 
 #chart-title h1{
  color: #71E0FC;
- text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
  filter: alpha(opacity=80);
  -moz-opacity:0.8;
@@ -31,7 +32,6 @@ height:510px;
 
 #chart-title h2{
  color: #71E0FC;
- text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
  filter: alpha(opacity=80);
  -moz-opacity:0.8;

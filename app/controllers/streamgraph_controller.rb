@@ -5,8 +5,8 @@ class StreamgraphController < ApplicationController
   def all_datasets
     @all_datasets
     respond_to do |format|
-      format.json{
-        render :json => @all_datasets
+      format.html{
+        render :json => {"all_datasets" => @all_datasets_and_labels[0], "all_labels" => @all_datasets_and_labels[1]}
       }
     end 
   end
@@ -22,9 +22,9 @@ class StreamgraphController < ApplicationController
 
   def countries
     @countries_and_nids = TermHierarchy.array_by_parent(5)
-    @countries = @countries_and_nids #.map {|a| a[0]}
+    @countries = @countries_and_nids
     respond_to do |format|
-    format.json{
+    format.html{
       render :json => @countries.to_json
     }       
     end
@@ -33,8 +33,8 @@ class StreamgraphController < ApplicationController
   def data
     @graphdata
     respond_to do |format|
-    format.json{
-      render :json => @graphdata
+    format.html{
+      render :json => {"datasets" => @datasets_and_labels[0], "labels" => @datasets_and_labels[1]}
     }       
     end
   end
@@ -54,14 +54,13 @@ class StreamgraphController < ApplicationController
 protected
 
   def get_data_and_labels
-    data = TermDatum.streamgraph(params[:id])
-    @graphdata = data[0]
-    @labels = data[1]
+    data_and_labels = TermDatum.streamgraph(params[:id])
+    @datasets_and_labels = data_and_labels
   end
 
   def get_all_datasets_and_labels
-    data = ContentTypeRecord.streamgraph
-    @all_datasets = data[0]
-    @all_labels = data[1]
+    data_and_labels = ContentTypeRecord.streamgraph
+    @all_datasets_and_labels = data_and_labels
   end
 end
+

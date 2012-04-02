@@ -5,18 +5,16 @@
 
 <% end %>
 
-<div class="page-header">
-
-  <h1 class="subhead">GHDx Streamgraph</h1>
-  <h4>Datasets catalogued in the Global Health Data Exchange by country and datatype.</h4>
-
+<div class="page-header"> 
+      <h1 class="subhead">GHDx Streamgraph</h1>
+      <h4>Datasets catalogued in the Global Health Data Exchange by datatype.</h4>
 </div>
 
 
 <div class="row show-grid">
 
 
-  <div class="span2">
+  <div class="span2" style="width:120px">
 
     <div class="row show-grid">
 
@@ -26,15 +24,23 @@
 
       </div>
 
-      <div class="span2 side-things">
+      <div class="span2 side-things"> 
+          <div id="form-status">
+            <form id="countryform">
+                <input name="countrybox" autocomplete="off" id="countrybox" type="text" data-provide="typeahead" class="span2"></input>
+                <input class="btn" type="submit" value="Submit" /></input>
+            </form>             
+          </div>
 
-        <form id="countryform">
-          <input name="countrybox" autocomplete="off" id="countrybox" type="text" data-provide="typeahead" class="span2">
-          <input type="submit" value="Submit" />
-          </input>
-        </form>
+          <div id="loading-gif" class="span2 side-things">
+            <%= image_tag "loading.gif" %>
+          </div>
 
-        <%= image_tag "loading.gif" %>
+          <div id="reset-btn" class="span2 side-things">
+            <form id="reset-button">
+              <input class="btn btn-success" type="submit" value="All Datasets"></input>
+            </form>
+          </div> 
 
       </div>
 
@@ -56,14 +62,10 @@
 
       <div id="chart-goes-here">
       </div>
-
-      <br />
    
-      <div id="range-slider">
-         
-        <%= javascript_include_tag "range-slider" %>
-        
-      </div>    
+      <div id="range-slider">         
+        <%= javascript_include_tag "range-slider" %>        
+      </div>
 
     </div>
 
