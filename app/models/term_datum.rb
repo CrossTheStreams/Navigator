@@ -9,11 +9,11 @@ class TermDatum < ActiveRecord::Base
 
   def self.streamgraph(tid)
 
-    term = TermNode.joins{term_datum}.where({:tid => tid})
+    term_nodes = TermNode.joins{term_datum}.where({:tid => tid})
 
     #Two dimensional array with start date, end date, and dataset type.
 
-    dates_by_type_array = ContentTypeRecord.where{nid.in(term.select{nid})}.order("field_type_value").map do |dataset|
+    dates_by_type_array = ContentTypeRecord.where{nid.in(term_nodes.select{nid})}.order("field_type_value").map do |dataset|
 
       [dataset.field_time_period_covered_value[0..3].to_i, 
           dataset.field_time_period_covered_value2[0..3].to_i, 

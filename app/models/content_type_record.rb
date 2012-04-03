@@ -64,3 +64,6 @@ class ContentTypeRecord < ActiveRecord::Base
 
 
 end
+
+#ContentTypeRecord.joins{node}.select("field_time_period_covered_value, field_time_period_covered_value2, field_type_value, title, node.nid").where{nid.in(term_node.select{nid})}.order("field_type_value").map {|dataset| [dataset.field_time_period_covered_value[0..3].to_i, dataset.field_time_period_overed_value2[0..3].to_i, dataset.title, dataset.field_type_value, dataset.nid]}
+
