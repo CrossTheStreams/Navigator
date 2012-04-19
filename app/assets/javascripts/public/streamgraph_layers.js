@@ -250,3 +250,12 @@ jQuery(document).ready(function($) {
 
 });
 
+
+//d3.selectAll("path").on("mouseout", function() {
+//this.style.stroke="none"
+//});
+
+//d3.selectAll("path").on("mouseover", function() {
+//this.style.stroke="rgb(113, 224, 252)";
+//this.style.strokeWidth="3px";
+/*});*/
