@@ -4,10 +4,19 @@
   <%= stylesheet_link_tag "jquery-ui" %> 
 
 <% end %>
-
-<div class="page-header"> 
-      <h1 class="subhead">GHDx Streamgraph</h1>
-      <h4>Datasets catalogued in the Global Health Data Exchange by datatype.</h4>
+<div class="content">
+<div class="page-header">
+  <div class="row show-grid">
+     <div class="span6"> 
+       <h1 class="subhead">GHDx Streamgraph</h1>
+       <h4>Datasets catalogued in the Global Health Data Exchange by datatype.</h4>
+     </div>
+     <div class="span4">
+       <span id="type-label">This is some text.</span>
+     </div>
+     <div class="type-definition">
+     </div>
+  </div>
 </div>
 
 
@@ -69,13 +78,46 @@
 
     </div>
 
-  </div>  
+  </div>
 
+  <%= javascript_tag :id => "Definitions" do %>
+    
+    var definitions_array =
+    {"types" :[
+    {"label": "Administrative Records – Financial", "definition": "Financial data of organizations and governments."}, 
+    {"label": "Administrative Records – Operational", "definition": "Data concerning the operations of organizations and governments"}, 
+    {"label": "Census", "definition": "The procedure of systematically acquiring and recording information about the members of a given population. It is a regularly occurring and official count of a particular population."}, 
+    {"label": "Common Indicator", "definition": "Indicator data."}, 
+    {"label": "Estimate", "definition": "Data that is abtracted in a manner from its original collection. Does not include microdata."}, 
+    {"label": "Health Records", "definition": "Hospital data."}, 
+    {"label": "Journal Article", "definition": "A work written for the purpose of propagating research."}, 
+    {"label": "Multisource", "definition": "Data that is abstract or collected from multiple sources. Confusing? You bet! :D"}, 
+    {"label": "Registry", "definition": "A systematic, centralized collection of data, often concerning a particular disease (e.g. cancer)."}, 
+    {"label": "Report", "definition": "Reports that serve as datasets, as well as documentation."}, 
+    {"label": "Research Archive", "definition": "An archive of data."}, 
+    {"label": "Results Data", "definition": "Results from a study."}, 
+    {"label": "Surveillance System", "definition": "Data available from an epidemiological surveillance system."},
+    {"label": "Survey - Facility", "definition": "A survey that collects data from facility personnel."}, 
+    {"label": "Survey - Household", "definition": "A survey that collects data from individuals or households"}, 
+    {"label": "Tool", "definition": "Software that is of use for data analysis."}, 
+    {"label": "Vital Registration", "definition": "Data concerning the vital events of a country's citizens and residents."}
+    ]  }
+  
+  <% end %>
 
-
-
+</div>
 </div>
 
 
+<%#$('#type-label').fadeOut('fast').animate({%>
+            <%#'padding': '0px'%>
+            <%#}, {duration: 'slow', queue: false}, function() {%>
+            <%#// Animation complete.%>
+            <%#});%>
 
-
+<%#$('#type-label').fadeIn('fast').animate({%>
+            <%#'padding': '20px'%>
+            <%#}, {duration: 'slow', queue: false}, function() {%>
+            <%#// Animation complete.%>
+  <%#});%>
+<%#[%>

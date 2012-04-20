@@ -24,6 +24,20 @@ function getCountriesAndNids() {
 };
 
 
+function highlightingAndLabels() {
+
+	d3.selectAll("path").on("mouseout", function() {
+    this.style.stroke="none"
+  });
+
+  d3.selectAll("path").on("mouseover", function() {
+    this.style.stroke="rgb(113, 224, 252)";
+    this.style.strokeWidth="3px";
+  });
+
+  $("#type-label").text(labels_array[0])
+}
+
 
 function getStreamGraph(x) {
 
@@ -52,13 +66,18 @@ function getStreamGraph(x) {
     .enter().append("path")
     .style("fill", function() { return color(Math.random()); })
     .attr("d", area);
+
+	//Giving ids to paths for labels.	
+
+	d3.selectAll("path")[0].map( function(p, i) {
+  p.id = i;
+  });
+
+	highlightingAndLabels()
  
   showChart();
   hideLoadingGif();
-
 }
-
-
 
 function transition(x) {
 
@@ -100,8 +119,17 @@ function transition(x) {
     .transition()
     .duration(2500)
     .attr("d", area);
-    hideLoadingGif();
-    showChartTitle();
+
+  //Giving ids to paths for labels.	
+   
+	d3.selectAll("path")[0].map( function(p, i) {
+  p.id = i;
+  });
+
+	highlightingAndLabels()
+
+  hideLoadingGif();
+  showChartTitle();
 
 };
 
@@ -165,7 +193,7 @@ jQuery(document).ready(function($) {
   
   alldatasetssurl = '/all_datasets_by_year/';
   all_datasets_array = {};
-  all_types_array = {};
+  labels_array = {};
   
   $.ajax({
     async: true,
@@ -174,7 +202,7 @@ jQuery(document).ready(function($) {
     dataType: 'json',
     success: function(all_datasets_and_labels){
       all_datasets_array = all_datasets_and_labels["all_datasets"];
-      all_types_array = all_datasets_and_labels["all_labels"]
+      labels_array = all_datasets_and_labels["all_labels"]
       x = streamGraphTheData(all_datasets_array);
       data0 = d3.layout.stack().offset("silhouette")(x);        
       getStreamGraph(x);
@@ -244,18 +272,34 @@ jQuery(document).ready(function($) {
     data1 = d3.layout.stack().offset("silhouette")(x); 
     transition(x);
     hideReset();
-    return false; 
+    return false;
+
+		var definitions_array = {"types" :[
+    {"label": "Administrative Records – Financial", "definition": "Financial data of organizations and governments."}, 
+    {"label": "Administrative Records – Operational", "definition": "Data concerning the operations of organizations and governments"}, 
+    {"label": "Census", "definition": "The procedure of systematically acquiring and recording information about the members of a given population. It is a regularly occurring and official count of a particular population."}, 
+    {"label": "Common Indicator", "definition": "Indicator data."}, 
+    {"label": "Estimate", "definition": "Data that is abtracted in a manner from its original collection. Does not include microdata."}, 
+    {"label": "Health Records", "definition": "Hospital data."}, 
+    {"label": "Journal Article", "definition": "A work written for the purpose of propagating research."}, 
+    {"label": "Multisource", "definition": "Data that is abstract or collected from multiple sources. Confusing? You bet! :D"}, 
+    {"label": "Registry", "definition": "A systematic, centralized collection of data, often concerning a particular disease (e.g. cancer)."}, 
+    {"label": "Report", "definition": "Reports that serve as datasets, as well as documentation."}, 
+    {"label": "Research Archive", "definition": "An archive of data."}, 
+    {"label": "Results Data", "definition": "Results from a study."}, 
+    {"label": "Surveillance System", "definition": "Data available from an epidemiological surveillance system."},
+    {"label": "Survey - Facility", "definition": "A survey that collects data from facility personnel."}, 
+    {"label": "Survey - Household", "definition": "A survey that collects data from individuals or households"}, 
+    {"label": "Tool", "definition": "Software that is of use for data analysis."}, 
+    {"label": "Vital Registration", "definition": "Data concerning the vital events of a country's citizens and residents."}
+    ]};
+
 
   });
 
 });
 
 
-//d3.selectAll("path").on("mouseout", function() {
-//this.style.stroke="none"
-//});
 
-//d3.selectAll("path").on("mouseover", function() {
-//this.style.stroke="rgb(113, 224, 252)";
-//this.style.strokeWidth="3px";
-/*});*/
+
+
