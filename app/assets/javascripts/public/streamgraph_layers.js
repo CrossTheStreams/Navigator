@@ -104,6 +104,7 @@ function highlightingAndLabels() {
   });
 
   $("#type-label").fadeOut("slow");
+  $("#type-definition").fadeOut("slow")
   $("#type-label").text(labels_array[0]);
  
 
@@ -272,7 +273,8 @@ jQuery(document).ready(function($) {
     dataType: 'json',
     success: function(all_datasets_and_labels){
       all_datasets_array = all_datasets_and_labels["all_datasets"];
-      labels_array = all_datasets_and_labels["all_labels"]
+      labels_array = all_datasets_and_labels["all_labels"];
+      all_labels = labels_array;
       x = streamGraphTheData(all_datasets_array);
       data0 = d3.layout.stack().offset("silhouette")(x);        
       getStreamGraph(x);
@@ -339,6 +341,7 @@ jQuery(document).ready(function($) {
 
     hideChartTitle();
     x = streamGraphTheData(all_datasets_array);
+    labels_array = all_labels;
     n = all_datasets_array.length, // number of layers
     m = all_datasets_array[0].length, // number of samples per layer
     $("#chart-title h1").text("All Datasets"); 
