@@ -2,14 +2,14 @@
 <html>
 <head>
   <title>Navigator</title>
-  <%= javascript_include_tag "d3.v2" %>
+  <%= javascript_include_tag "d3.v2.min" %>
   <%= javascript_include_tag "application" %>
   <%= stylesheet_link_tag  "application" %>
   <%= yield :head %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container" style="width:1170px">
+  <div id="streamgraph-content" class="container">
     <%= yield %>
   </div>
 </body>

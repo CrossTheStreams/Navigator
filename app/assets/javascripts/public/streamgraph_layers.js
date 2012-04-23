@@ -1,8 +1,10 @@
 var w = 1000;
 var h = 490;
+all_paths = d3.selectAll("path")[0];
+color_array = ["#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8"];
 
 $.ajaxSetup({
-  timeout: '6000'
+  timeout: '7000'
 });
 
 function getCountriesAndNids() {
@@ -23,27 +25,95 @@ function getCountriesAndNids() {
     return result;
 };
 
+function fillColors() {
+  d3.selectAll("path")[0].map( function(path, i) {
+    path.style.fill = color_array[i];
+  });
+};
+
 
 function highlightingAndLabels() {
 
-	d3.selectAll("path").on("mouseout", function() {
-    this.style.stroke="none"
+  //Giving ids to paths for labels and changing path strokes according to clicked state and mouseover/mouseout.	
+
+  d3.selectAll("path")[0].map( function(path, i) {
+    path.id = i;
+    path.clicked = false;
+    path.style.stroke = "none";
+    d3.select(path).classed("opaque", true);
+
+  d3.select(path).on("mouseover", function() {
+      if (path.clicked === false) {
+        path.style.stroke = "rgb(8, 224, 159)";
+        path.style.strokeWidth = "3px";
+        d3.select(path).classed("opaque", false);
+      }
   });
 
-  d3.selectAll("path").on("mouseover", function() {
-    this.style.stroke="rgb(113, 224, 252)";
-    this.style.strokeWidth="3px";
+    d3.select(path).on("mouseout", function() {
+      if (path.clicked === false) {
+        path.style.stroke = "none";
+        d3.select(path).classed("opaque", true);
+      }
+    });
+
+    d3.select(path).on("click", function() {
+      if (path.clicked === false) {
+
+        $("#type-label").css('display', 'none');
+        $("#type-definition").css('display', 'none');
+        $("#type-label").css('padding', '0px');
+        $("#type-definition").css('padding', '0px');
+
+        d3.selectAll("path")[0].map( function(p, i) {
+          p.clicked = false;
+          p.style.stroke = "none";
+          d3.select(path).classed("opaque", false);
+        }); 
+        path.clicked = true;
+        path.style.stroke = "rgb(113, 224, 252)";
+        path.style.strokeWidth = "3px";
+        $("#type-label").text(labels_array[i]);
+
+          for (var index = 0; index < definitions.length; index++)
+            {
+              if (definitions[index].label == labels_array[i]) {
+                $("#type-definition").text(definitions[index].definition);
+              }
+            };
+
+        $("#type-label").fadeIn("slow").animate({
+            'padding-left': '10px'
+            }, {duration: 'slow', queue: false}, function() {
+            // Animation complete.
+        });
+
+        $("#type-definition").fadeIn("slow").animate({
+            'padding-right': '10px'
+            }, {duration: 'slow', queue: false}, function() {
+            // Animation complete.
+        });
+      }
+      else { 
+        path.clicked = false;
+        path.style.stroke = "rgb(8, 224, 159)";
+        path.style.strokeWidth = "3px";
+        d3.select(path).classed("opaque", true);
+      }
+    });
   });
 
-  $("#type-label").text(labels_array[0])
-}
+  $("#type-label").fadeOut("slow");
+  $("#type-label").text(labels_array[0]);
+ 
+
+};
 
 
 function getStreamGraph(x) {
 
   var n = x.length, // number of layers
-      m = x[0].length, // number of samples per layer
-      color = d3.interpolateRgb("#C8F099", "#31A635");
+      m = x[0].length; // number of samples per layer
 
   var mx = m - 1,
       my = d3.max(data0, function(d) {
@@ -64,17 +134,10 @@ function getStreamGraph(x) {
   vis.selectAll("path")
     .data(data0)
     .enter().append("path")
-    .style("fill", function() { return color(Math.random()); })
     .attr("d", area);
 
-	//Giving ids to paths for labels.	
-
-	d3.selectAll("path")[0].map( function(p, i) {
-  p.id = i;
-  });
-
-	highlightingAndLabels()
- 
+  highlightingAndLabels();
+  fillColors()
   showChart();
   hideLoadingGif();
 }
@@ -82,9 +145,6 @@ function getStreamGraph(x) {
 function transition(x) {
 
   h = 490;
-  
-  color = d3.interpolateRgb("#C8F099", "#31A635");
-
   mx = m - 1,
   my = d3.max(data1, function(d) {
     return d3.max(d, function(d) {
@@ -107,7 +167,6 @@ function transition(x) {
   d3.select("svg").selectAll("path")
     .data(x)
     .enter().insert("path")
-    .style("fill", function() { return color(Math.random()); })
     .attr("d", area);
 
   d3.selectAll("path")
@@ -119,15 +178,9 @@ function transition(x) {
     .transition()
     .duration(2500)
     .attr("d", area);
-
-  //Giving ids to paths for labels.	
    
-	d3.selectAll("path")[0].map( function(p, i) {
-  p.id = i;
-  });
-
-	highlightingAndLabels()
-
+  highlightingAndLabels();
+  fillColors();
   hideLoadingGif();
   showChartTitle();
 
@@ -185,12 +238,29 @@ function showReset() {
 $('#reset-btn').fadeIn("slow");
 };
 
-
-
-
-
 jQuery(document).ready(function($) {
-  
+
+  type_definitions = {"types" :[
+    {"label": "Administrative Records – Financial", "definition": "Financial data of organizations and governments."}, 
+    {"label": "Administrative Records – Operational", "definition": "Data concerning the operations of organizations and governments"}, 
+    {"label": "Census", "definition": "The procedure of systematically acquiring and recording information about the members of a given population."}, 
+    {"label": "Common Indicator", "definition": "Indicator data."}, 
+    {"label": "Estimate", "definition": "Data that is abtracted in a manner from its original collection. Does not include microdata."}, 
+    {"label": "Health Records", "definition": "Hospital data."}, 
+    {"label": "Journal Article", "definition": "A work written for the purpose of propagating research."}, 
+    {"label": "Multisource", "definition": "Data that is abstract or collected from multiple sources. Confusing? You bet! :D"}, 
+    {"label": "Registry", "definition": "A systematic, centralized collection of data, often concerning a particular disease (e.g. cancer)."}, 
+    {"label": "Report", "definition": "Reports that serve as datasets, as well as documentation."}, 
+    {"label": "Research Archive", "definition": "An archive of data."}, 
+    {"label": "Results Data", "definition": "Results from a study."}, 
+    {"label": "Surveillance System", "definition": "Data available from an epidemiological surveillance system."},
+    {"label": "Survey - Facility", "definition": "A survey that collects data from facility personnel."}, 
+    {"label": "Survey - Household", "definition": "A survey that collects data from individuals or households"}, 
+    {"label": "Tool", "definition": "Software that is of use for data analysis."}, 
+    {"label": "Vital Registration", "definition": "Data concerning the vital events of a country's citizens and residents."}
+    ]}; 
+
+  definitions = type_definitions.types;
   alldatasetssurl = '/all_datasets_by_year/';
   all_datasets_array = {};
   labels_array = {};
@@ -209,6 +279,7 @@ jQuery(document).ready(function($) {
     },
     error: function (xhr, ajaxOptions, thrownError){
       console.log(thrownError);
+
     }
   });
   
@@ -253,7 +324,9 @@ jQuery(document).ready(function($) {
           },
           error: function (xhr, timeout, thrownError){
             console.log(thrownError);
-	    hideLoadingGif(); 
+	    hideLoadingGif();
+            $("#chart-title h1").text("Timeout :(");
+            showChart();
            }
         });
 
@@ -273,27 +346,6 @@ jQuery(document).ready(function($) {
     transition(x);
     hideReset();
     return false;
-
-		var definitions_array = {"types" :[
-    {"label": "Administrative Records – Financial", "definition": "Financial data of organizations and governments."}, 
-    {"label": "Administrative Records – Operational", "definition": "Data concerning the operations of organizations and governments"}, 
-    {"label": "Census", "definition": "The procedure of systematically acquiring and recording information about the members of a given population. It is a regularly occurring and official count of a particular population."}, 
-    {"label": "Common Indicator", "definition": "Indicator data."}, 
-    {"label": "Estimate", "definition": "Data that is abtracted in a manner from its original collection. Does not include microdata."}, 
-    {"label": "Health Records", "definition": "Hospital data."}, 
-    {"label": "Journal Article", "definition": "A work written for the purpose of propagating research."}, 
-    {"label": "Multisource", "definition": "Data that is abstract or collected from multiple sources. Confusing? You bet! :D"}, 
-    {"label": "Registry", "definition": "A systematic, centralized collection of data, often concerning a particular disease (e.g. cancer)."}, 
-    {"label": "Report", "definition": "Reports that serve as datasets, as well as documentation."}, 
-    {"label": "Research Archive", "definition": "An archive of data."}, 
-    {"label": "Results Data", "definition": "Results from a study."}, 
-    {"label": "Surveillance System", "definition": "Data available from an epidemiological surveillance system."},
-    {"label": "Survey - Facility", "definition": "A survey that collects data from facility personnel."}, 
-    {"label": "Survey - Household", "definition": "A survey that collects data from individuals or households"}, 
-    {"label": "Tool", "definition": "Software that is of use for data analysis."}, 
-    {"label": "Vital Registration", "definition": "Data concerning the vital events of a country's citizens and residents."}
-    ]};
-
 
   });
 

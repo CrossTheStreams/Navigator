@@ -11,12 +11,41 @@
 #chart {
 display: none;
 }
+#streamgraph-content {
+width:1200px;
+margin-left:20px;
+}
+#label-container {
+  height: 80px;
+  width: 700px;
+  color: #71E0FC;
+  background-color: #5B5B5B;
+  border: 2px solid #333;
+  padding: 3px;
+  float: right;
+  margin-right: 25px;
+  #type-label {
+    padding: 3px;
+    color: #71E0FC;
+    font-size: 22px;
+    float: left;
+    width: 300px;
+    line-height: 23px;
+    display:none;
+  }
+  #type-definition {
+    padding: 3px;
+    float: right;
+    width: 350px;
+  }
+}
 
 #chart-container {
 width:1000px;
-height:500px;
+height:483px;
 padding: 15px 15px 40px 15px;
 background-color: #5B5B5B;
+border: solid 2px #333333;
 }
 
 #chart-title h1{
@@ -44,7 +73,10 @@ background-color: #5B5B5B;
 position: absolute;
 }
 
-#type-label {
-color: #71E0FC;
-font-size: 22px;
+.opaque {
+ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+filter: alpha(opacity=70);
+-moz-opacity: 0.7;
+-khtml-opacity: 0.7;
+opacity: 0.7;
 }
