@@ -1,11 +1,11 @@
 var w = 1000;
 var h = 490;
 all_paths = d3.selectAll("path")[0];
-color_array = ["#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8"];
+color_array = ["#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8", "#4EA14C", "#7CCB7A", "#21771E", "#AAF5A8"];
 
-$.ajaxSetup({
-  timeout: '7000'
-});
+/*$.ajaxSetup({*/
+  //timeout: '7000'
+/*});*/
 
 function getCountriesAndNids() {
     url = '/terms_by_parent/';
@@ -242,23 +242,24 @@ $('#reset-btn').fadeIn("slow");
 jQuery(document).ready(function($) {
 
   type_definitions = {"types" :[
-    {"label": "Administrative Records – Financial", "definition": "Financial data of organizations and governments."}, 
-    {"label": "Administrative Records – Operational", "definition": "Data concerning the operations of organizations and governments"}, 
-    {"label": "Census", "definition": "The procedure of systematically acquiring and recording information about the members of a given population."}, 
+    {"label": "Administrative Records – Financial", "definition": "Data from the formal records of the financial activities of an entity (or person) (no microdata, a form of estimate)."}, 
+    {"label": "Administrative Records – Operational", "definition": "Data from the records maintained by agencies, institutions, commercial entities and governments, where the records are used for administrative purposes or for providing services (has microdata)."}, 
+    {"label": "Census", "definition": "Data from a complete count of a specified population or entity; may include investigation of behavior, opinions or attributes by questioning (has microdata)."}, 
     {"label": "Common Indicator", "definition": "Indicator data."}, 
-    {"label": "Estimate", "definition": "Data that is abtracted in a manner from its original collection. Does not include microdata."}, 
+    {"label": "Estimate", "definition": "Standalone estimates that may be the underlying datasets for a publication or that may have just been created for their own sake (no microdata)."}, 
     {"label": "Health Records", "definition": "Hospital data."}, 
     {"label": "Journal Article", "definition": "A work written for the purpose of propagating research."}, 
-    {"label": "Multisource", "definition": "Data that is abstract or collected from multiple sources. Confusing? You bet! :D"}, 
-    {"label": "Registry", "definition": "A systematic, centralized collection of data, often concerning a particular disease (e.g. cancer)."}, 
+    {"label": "Multisource", "definition": "Data that is abstract or collected from multiple sources. Confusing? You bet! :D"},
+    {"label": "Project Archive", "definition": "An archive for a project?"},	
+    {"label": "Registry", "definition": "Data from a centralized source that gathers information on patients with a specific diagnosis, condition or procedure (has microdata)."}, 
     {"label": "Report", "definition": "Reports that serve as datasets, as well as documentation."}, 
     {"label": "Research Archive", "definition": "An archive of data."}, 
     {"label": "Results Data", "definition": "Results from a study."}, 
-    {"label": "Surveillance System", "definition": "Data available from an epidemiological surveillance system."},
-    {"label": "Survey - Facility", "definition": "A survey that collects data from facility personnel."}, 
-    {"label": "Survey - Household", "definition": "A survey that collects data from individuals or households"}, 
-    {"label": "Tool", "definition": "Software that is of use for data analysis."}, 
-    {"label": "Vital Registration", "definition": "Data concerning the vital events of a country's citizens and residents."}
+    {"label": "Surveillance System", "definition": "Data from labs, doctors, or other health workers on confirmed or suspected notifiable diseases (has microdata)."},
+    {"label": "Survey - Facility", "definition": "Survey data data from facility personnel."}, 
+    {"label": "Survey - Household", "definition": "Survey data collected from individuals or households."}, 
+    {"label": "Tool", "definition": "Software used for data analysis."}, 
+    {"label": "Vital Registration", "definition": "Data from systems that register vital events in a population (has microdata)."}
     ]}; 
 
   definitions = type_definitions.types;
@@ -324,12 +325,12 @@ jQuery(document).ready(function($) {
 	    transition(data1);
             showReset();
           },
-          error: function (xhr, timeout, thrownError){
-            console.log(thrownError);
-	    hideLoadingGif();
-            $("#chart-title h1").text("Timeout :(");
-            showChart();
-           }
+/*          error: function (xhr, timeout, thrownError){*/
+            //console.log(thrownError);
+						//hideLoadingGif();
+            //$("#chart-title h1").text("Timeout :(");
+            //showChart();
+           /*}*/
         });
 
       }
