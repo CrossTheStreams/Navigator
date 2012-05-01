@@ -68,8 +68,9 @@ function highlightingAndLabels() {
         d3.selectAll("path")[0].map( function(p, i) {
           p.clicked = false;
           p.style.stroke = "none";
-          d3.select(path).classed("opaque", false);
-        }); 
+          d3.select(p).classed("opaque", true);
+        });
+        d3.select(path).classed("opaque", false); 
         path.clicked = true;
         path.style.stroke = "rgb(113, 224, 252)";
         path.style.strokeWidth = "3px";

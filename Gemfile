@@ -8,7 +8,6 @@ gem 'rails', '3.1.3'
 #gem 'sqlite3'
  gem 'mysql2'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -20,8 +19,6 @@ end
 
 gem 'squeel'
 gem 'json'
-
-
 
 gem 'sort_alphabetical'
 
@@ -36,13 +33,16 @@ gem 'sort_alphabetical'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+#
+group :development do
+  gem 'guard-rspec'
+  gem 'guard'
+end
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.5'
   gem 'capybara'
 end
-
-
 
 group :test do
   # Pretty printed test output
