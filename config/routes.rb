@@ -1,6 +1,6 @@
 Navigator::Application.routes.draw do
 
-  root :to => "home#index"
+  root :to => "streamgraph#show"
 
   get "/streamgraph/:id" => "streamgraph#data"
 
